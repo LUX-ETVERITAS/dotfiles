@@ -1,0 +1,51 @@
+""""""""""""""""""""""""""""""""""""""""""""""
+" Maintainer
+"   zibuyu
+" 我从https://github.com/amix/vimrc/tree/master
+" 了解到了可以把vim配置分成basic和awesome版本
+" 这个是很好的实践 在一些环境下 如果插件安装困难
+" 使用basic版本即可
+" 还有一种方法 在plugin 配置
+" Sections:
+" 	-> General
+""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""
+" => General
+""""""""""""""""""""""
+
+" 设置 VIM 需要存储多少行历史
+set history=500
+
+" 启用 filetype 插件
+filetype plugin on
+filetype indent on
+
+" 当文件被外部改变 设置自动读取文件
+set autoread
+autocmd FocusGained,BufEnter * silent! checktime
+
+let mapleader = ","
+
+" 快速保存
+nnoremap <leader>w :w!<cr>
+
+" 定义命令 W 可以sudo 保存文件
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+set encoding=utf-8
+
+" => 插件安装
+"
+" vim-plug 自动安装
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+
+Plug 'lervag/vimtex'
+
+call plug#end()
