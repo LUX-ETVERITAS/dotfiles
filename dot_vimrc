@@ -7,12 +7,15 @@
 " 使用basic版本即可
 " 还有一种方法 在plugin 配置
 " Sections:
-" 	-> General
+" => General
 """"""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""
 " => General
 """"""""""""""""""""""
+set nocompatible
+set number
+set relativenumber
 
 " 设置 VIM 需要存储多少行历史
 set history=500
@@ -26,16 +29,119 @@ set autoread
 autocmd FocusGained,BufEnter * silent! checktime
 
 let mapleader = ","
-
+let maplocalleader = "\\"
 " 快速保存
 nnoremap <leader>w :w!<cr>
 
 " 定义命令 W 可以sudo 保存文件
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
+" => VIM 用户接口
+
+set so=7
+
+" 解决 Windows OS 中文乱码
+let $LANG='en'
+set langmenu=en
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+" 开启 Wild menu
+set wildmenu
+
+" 忽略已经编译好的文件
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+	set wildignore+=.git\*,.hg,.svn
+else
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
+" 永远展示当前位置
+set ruler
+
+" 当前 command bar 高度
+set cmdheight=1
+
+" 缓冲区被弃用时被隐藏
+set hidden
+
+" 配置退格
+set backspace=eol,start,indent
+set whichwrap+=<,>
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set lazyredraw
+set magic
+set showmatch
+set matchtime=2
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+set foldcolumn=1
+
+" => 颜色和字体
+
+" 语法高亮
+syntax enable
+
+set regexpengine=0
+
+if $COLORTREM == 'gnome-terminal'
+	set t_Co=256
+endif
+try
+	colorscheme desert
+catch
+endtry
+
+set background=dark
+
+if has("gui_running")
+	set guioptions-=T
+	set guioptions-=e
+	set t_Co=256
+	set guitablabel=%M\ %t
+endif
+
+" => 文件, 备份和undo
+
+set nobackup
+set nowb
+set noswapfile
+
+" => 文本 tab indent
+set expandtab
+set smarttab
+
+set shiftwidth=4
+set tabstop=4
+
+set lbr
+set tw=500
+
+set ai
+set si
+set wrap
+
+
+
+" => 状态栏
+set laststatus=2 
+
 set encoding=utf-8
 
-" => 插件安装
+set ffs=unix,dos,mac
+
+" => cursor config
+let &t_SI = "\e[6 q"
+let &t_SR = "\e[4 q"
+let &t_EI = "\e[2 q"
+"  => 插件安装
 "
 " vim-plug 自动安装
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
@@ -47,5 +153,30 @@ endif
 call plug#begin()
 
 Plug 'lervag/vimtex'
+Plug 'github/copilot.vim'
+Plug 'preservim/nerdtree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'SirVer/ultisnips'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/vim-indent-guides'
+Plug 'tpope/vim-commentary'
+Plug 'dense-analysis/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
+
+"=> GUI
+
+
+" Disable scrollbars (real hackers don't use scrollbars for navigation!)
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
+" Colorscheme
+set background=dark
+colorscheme peaksea
+
+
