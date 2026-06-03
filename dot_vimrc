@@ -197,4 +197,14 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
+" 定义你希望 coc.nvim 自动安装的插件列表
+let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-vimlsp',
+    \ 'coc-tsserver',
+    \ 'coc-python',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-snippets',
+    \ 'coc-pyright'
+    \ ]
