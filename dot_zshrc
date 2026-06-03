@@ -77,8 +77,9 @@ zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit ice pick"async.zsh" src"pure.zsh"
 
 zinit light sindresorhus/pure
-zinit snippet ~/.aliases
-zinit snippet ~/.exports
+source ~/.aliases
+source ~/.exports
+
 . "$HOME/.local/bin/env"
 eval "$(mise activate zsh)"
 
@@ -131,5 +132,3 @@ if [[ "'${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
 else
   compdef _opencode_yargs_completions opencode
 fi
-#
-export PATH=$PATH:/usr/local/go/bin
