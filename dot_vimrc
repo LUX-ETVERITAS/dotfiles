@@ -163,6 +163,8 @@ Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'ctrlpvim/ctrlp.vim' " 模糊搜索
+Plug 'tpope/vim-fugitive' " git 集成
 
 call plug#end()
 

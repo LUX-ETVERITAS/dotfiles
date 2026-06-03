@@ -1,4 +1,3 @@
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -67,8 +66,7 @@ zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
 
 
 zinit snippet OMZ::plugins/extract
-zinit snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
-
+zinit light jeffreytse/zsh-vi-mode
 zinit ice lucid wait='1'
 
 zinit snippet OMZ::plugins/git/git.plugin.zsh
@@ -79,7 +77,8 @@ zinit snippet OMZ::plugins/git/git.plugin.zsh
 zinit ice pick"async.zsh" src"pure.zsh"
 
 zinit light sindresorhus/pure
-
+zinit snippet ~/.aliases
+zinit snippet ~/.exports
 . "$HOME/.local/bin/env"
 eval "$(mise activate zsh)"
 
@@ -90,3 +89,47 @@ if [ -d "$FNM_PATH" ]; then
   eval "$(fnm env --shell zsh)"
 fi
 
+
+
+# pnpm
+export PNPM_HOME="/home/zibuyu/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/home/zibuyu/.bun/_bun" ] && source "/home/zibuyu/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+#compdef opencode
+###-begin-opencode-completions-###
+#
+# yargs command completion script
+#
+# Installation: opencode completion >> ~/.zshrc
+#    or opencode completion >> ~/.zprofile on OSX.
+#
+_opencode_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" opencode --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  if [[ ${#reply} -gt 0 ]]; then
+    _describe 'values' reply
+  else
+    _default
+  fi
+}
+if [[ "'${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
+  _opencode_yargs_completions "$@"
+else
+  compdef _opencode_yargs_completions opencode
+fi
+#
+export PATH=$PATH:/usr/local/go/bin
