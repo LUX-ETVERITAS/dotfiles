@@ -177,6 +177,8 @@ set guioptions-=L
 
 " Colorscheme
 set background=dark
-colorscheme peaksea
-
+ " Enter 选择补全项 / 没有补全时正常回车
+    inoremap <silent><expr> <CR> coc#pum#visible()
+          \ ? coc#pum#confirm()
+          \ : "\<CR>"
 
