@@ -5,3 +5,7 @@ export EDITOR='vim';
 
 export PYTHONIOENCODING='UTF-8';
 
+export MANPATH=$MANPATH:/usr/local/texlive/2026/texmf-dist/doc/man
+export INFOPATH=$INFOPATH:/usr/local/texlive/2026/texmf-dist/doc/info
+export PATH=$PATH:/usr/local/texlive/2026/bin/x86_64-linux
+export PATH=$PATH:/usr/local/go/bin
